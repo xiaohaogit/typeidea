@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+# @Author  : xiaohao
+# @Email   : 321459055@qq.com
+# @File    : comment_block.py
+# @Software: PyCharm
+# @Time    : 2020/7/23 21:38
+
+from django import template
+
+from comment.forms import CommentForm
+from comment.models import Comment
+
+register = template.Library()
+
+
+@register.inclusion_tag('comment/block.html')
+def comment_block(target):
+    return {
+        'target': target,
+        'comment_form': CommentForm(),
+        'comment_list': Comment.get_by_target(target)
+    }
